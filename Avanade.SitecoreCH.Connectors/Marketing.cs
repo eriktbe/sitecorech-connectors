@@ -48,6 +48,7 @@ namespace Avanade.SitecoreCH.Connectors
             {
                 //Get configuration data from App.config connectionStrings
                 //string connectionString = Configuration.GetConnectionString();
+                //test 123
 
                 var asset = SitecoreClient.GetAsset(assetIdentifier).Result;
 
