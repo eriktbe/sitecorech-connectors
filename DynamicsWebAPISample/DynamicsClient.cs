@@ -37,15 +37,8 @@ namespace DynamicsWebAPISample
         {
             UpsertFileResponse returnValue = new UpsertFileResponse();
 
-            //HttpStringContent payload = new HttpStringContent();
-
-            //var json = JObject.Parse()
-
-            var timestamp = DateTime.UtcNow.ToString("yyyy-MM-dd-HH-mm-ss");
-
             var request = new UpsertFileRequest()
             {
-                //InputFile = $"{{\"msdyncrm_name\": \"{timestamp}.png\",\"msdyncrm_contenttype\" : \".png\",\"msdyncrm_width\": 100,\"msdyncrm_height\": 100}}",
                 InputFile = $"{{\"msdyncrm_name\": \"{asset.Name}\",\"msdyncrm_contenttype\" : \"{asset.ContentType}\",\"msdyncrm_width\": {asset.Width},\"msdyncrm_height\": {asset.Height}}}",
                 InputKeywords = "{\"id\": \"5eca04ef-b582-ec11-8d20-6045bd8dbb00\",\"entityType\": \"msdyncrm_keyword\",\"name\": \"test\"}"
             };
@@ -54,7 +47,6 @@ namespace DynamicsWebAPISample
 
             StringContent httpContent = new StringContent(json.ToString(), System.Text.Encoding.UTF8, "application/json");
 
-
             //Send the UpsertFile request to the Web API using a POST request. 
             HttpResponseMessage response = client.PostAsync("msdyncrm_UpsertFile", 
                     httpContent).Result;
@@ -62,8 +54,6 @@ namespace DynamicsWebAPISample
             {
                 //Get the response content and parse it.
                 JObject body = JObject.Parse(response.Content.ReadAsStringAsync().Result);
-
-                //returnValue.OutputFile = (string)body["OutputFile"];
 
                 string outputFileString = (string)body["OutputFile"];
 
@@ -84,50 +74,16 @@ namespace DynamicsWebAPISample
 
         public static void UpdateFileEntity(HttpClient client, string fileId)
         {
-            //UpsertFileResponse returnValue = new UpsertFileResponse();
-
-            //HttpStringContent payload = new HttpStringContent();
-
-            //var json = JObject.Parse()
-
-            //var timestamp = DateTime.UtcNow.ToString("yyyy-MM-dd-HH-mm-ss");
-
-            //var request = new UpsertFileRequest()
-            //{
-            //    InputFile = $"{{\"msdyncrm_name\": \"{timestamp}.png\",\"msdyncrm_contenttype\" : \".png\",\"msdyncrm_width\": 100,\"msdyncrm_height\": 100}}",
-            //    InputKeywords = "{\"id\": \"5eca04ef-b582-ec11-8d20-6045bd8dbb00\",\"entityType\": \"msdyncrm_keyword\",\"name\": \"test\"}"
-            //};
-
-            //JObject json = (JObject)JToken.FromObject(request);
-
             StringContent httpContent = new StringContent("{\"msdyncrm_rethumbnail\": \"true\"}", System.Text.Encoding.UTF8, "application/json");
 
-
-            //Send the UpsertFile request to the Web API using a POST request. 
+            // Do a PATCH call to update the file entity record
             HttpResponseMessage response = client.PatchAsync($"msdyncrm_files({fileId})",
                     httpContent).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                ////Get the response content and parse it.
-                //JObject body = JObject.Parse(response.Content.ReadAsStringAsync().Result);
-
-                ////returnValue.OutputFile = (string)body["OutputFile"];
-
-                //string outputFileString = (string)body["OutputFile"];
-
-                //JObject outputFile = JObject.Parse(outputFileString);
-
-                //returnValue.OutputFile.BlobUri = (string)outputFile["msdyncrm_bloburi"];
-                //returnValue.OutputFile.FileId = (string)outputFile["msdyncrm_fileid"];
-                //returnValue.OutputFile.SasToken = (string)outputFile["msdyncrm_sastoken"];
-
-            }
-            else
+            if (!response.IsSuccessStatusCode)
             {
                 throw new Exception(string.Format("The UpdateFileEntity request failed with a status of '{0}'",
                         response.ReasonPhrase));
             }
-            //return returnValue;
         }
     }
 
@@ -139,8 +95,6 @@ namespace DynamicsWebAPISample
 
     public class UpsertFileResponse
     {
-        //public string OutputFile { get; set; }
-
         public OutputFile OutputFile { get; set; } = new OutputFile();
     }
 
@@ -151,13 +105,10 @@ namespace DynamicsWebAPISample
         public string SasToken { get; set; }
     }
 
-    //public class UpdateFileEntityRequest
-    //{
-    //    public bool
-    //}
-
-    //public class UpdateFileEntityResponse
-    //{
-
-    //}
+    public class WhoAmIResponse
+    {
+        public Guid BusinessUnitId { get; set; }
+        public Guid UserId { get; set; }
+        public Guid OrganizationId { get; set; }
+    }
 }

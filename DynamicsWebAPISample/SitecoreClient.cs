@@ -20,7 +20,7 @@ namespace DynamicsWebAPISample
             var asset = new Asset();
 
             // Your M endpoint to connect to
-            Uri endpoint = new Uri("https://ava-ch06-sandbox06.stylelabs.io/");
+            Uri endpoint = new Uri("https://<YOUR CH INSTANCE>.stylelabs.io/");
 
             // Enter your credentials here
             OAuthPasswordGrant oauth = new OAuthPasswordGrant
@@ -28,70 +28,27 @@ namespace DynamicsWebAPISample
                 ClientId = "client_id",
                 ClientSecret = "client_secret",
                 UserName = "sdkuser",
-                Password = "ContentH4b!"
+                Password = "<INSERT YOUR PASSWORD HERE>"
             };
 
             // Create the Web SDK client
             IWebMClient MClient = MClientFactory.CreateMClient(endpoint, oauth);
 
-            await MClient.TestConnectionAsync();
-
-            //long id = "";
-            //string identifier = "r1p8M65j3Euhyo178s9b1A";
-
-            //var loadConfig = new EntityLoadConfiguration(
-            //    CultureLoadOption.Default,
-            //    new PropertyLoadOption("Title", "FileName", "MainFile", "FileProperties"),
-            //    new RelationLoadOption("MasterFile"));
-
             IEntity entity = await MClient.Entities.GetAsync(assetIdentifier);
 
-            //var filePropsProp = entity.GetProperty<ICultureInsensitiveProperty>("FileProperties");
-            //var fileProps = entity.GetPropertyValue<JObject>("FileProperties");
-            //var width = fileProps["width"];
-            //var height = fileProps["height"];
-
-
-            //IRelation relation = entity.GetRelation("MasterFile");
-
             // Get the rendition from the entity
-            //var entity = await MConnector.Client.Entities.Get(assetId);
             var rendition = entity.GetRendition("downloadOriginal");
             var renditionItem = rendition?.Items?.FirstOrDefault();
 
             if (renditionItem == null) return null;
 
-            // Get a stream containing the contents of the rendition
-            //using (var stream = await renditionItem.GetStreamAsync())
-            //{
-            //    //Console.ReadLine();
-            //    using (Stream outStream = File.OpenWrite(@"C:\Temp\thorbeckegracht-TEST.jfif"))
-            //    {
-            //        stream.CopyTo(outStream);
-
-            //    }
-            //}
-
-            //return await renditionItem.GetStreamAsync();
-
             var fileName = entity.GetPropertyValue<string>("FileName");
             var width = entity.GetPropertyValue<long>("Width");
             var height = entity.GetPropertyValue<long>("Height");
-            //var masterFileId = entity.GetRelation<IParentToManyChildrenRelation>("MasterFile").Children.FirstOrDefault();
-
-            //if (masterFileId == null) return null;
-
-            //IEntity file = await MClient.Entities.GetAsync(masterFileId);
-
-            //var width = file.GetPropertyValue<int>("Width");
-            //var height = file.GetPropertyValue<int>("Height");
-
-            var stream = await renditionItem.GetStreamAsync();
             
+            // Download the asset file so we can retrieve and upload it later
             await renditionItem.DownloadAsync(fileName);
 
-            asset.File = stream;
-            //asset.Name = "Test Name";
             asset.Name = fileName;
             asset.ContentType = ".png";
             asset.Width = 100;
@@ -107,6 +64,5 @@ namespace DynamicsWebAPISample
         public string ContentType { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
-        public Stream File { get; set; }
     }
 }

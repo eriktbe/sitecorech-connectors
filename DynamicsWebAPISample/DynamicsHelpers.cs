@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DynamicsWebAPISample
 {
-    public class SampleHelpers
+    public class DynamicsHelpers
     {
         //These sample application registration values are available for all online instances.
         //You can use these while running sample code, but you should get your own for your own apps
