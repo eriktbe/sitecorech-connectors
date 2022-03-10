@@ -50,9 +50,9 @@ namespace DynamicsWebAPISample
             await renditionItem.DownloadAsync(fileName);
 
             asset.Name = fileName;
-            asset.ContentType = ".png";
-            asset.Width = 100;
-            asset.Height = 100;
+            asset.ContentType = ".png"; // hard-coded for now
+            asset.Width = width;
+            asset.Height = height;
 
             return asset;
         }
@@ -62,7 +62,7 @@ namespace DynamicsWebAPISample
     {
         public string Name { get; set; }
         public string ContentType { get; set; }
-        public int Width { get; set; }
-        public int Height { get; set; }
+        public long Width { get; set; }
+        public long Height { get; set; }
     }
 }

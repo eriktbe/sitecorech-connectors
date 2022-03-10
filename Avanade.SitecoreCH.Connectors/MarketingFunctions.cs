@@ -31,18 +31,18 @@ namespace Avanade.SitecoreCH.Connectors
                 using (HttpClient client = DynamicsHelpers.GetHttpClient(connectionString, DynamicsHelpers.clientId, DynamicsHelpers.redirectUrl))
                 {
                     // Call the UpsertFile method to create file entity in D365 Marketing
-                    UpsertFileResponse response2 = DynamicsClient.UpsertFile(client, asset);
-                    log.LogInformation($"Your blob URI is: {response2.OutputFile.BlobUri}");
-                    log.LogInformation($"Your file ID is: {response2.OutputFile.FileId}");
-                    log.LogInformation($"Your SAS token is: {response2.OutputFile.SasToken}");
+                    UpsertFileResponse response = DynamicsClient.UpsertFile(client, asset);
+                    log.LogInformation($"Your blob URI is: {response.OutputFile.BlobUri}");
+                    log.LogInformation($"Your file ID is: {response.OutputFile.FileId}");
+                    log.LogInformation($"Your SAS token is: {response.OutputFile.SasToken}");
 
                     // Upload file to Azure blob storage
-                    AzureBlobClient.UploadFile(response2.OutputFile.BlobUri, response2.OutputFile.SasToken, asset);
+                    AzureBlobClient.UploadFile(response.OutputFile.BlobUri, response.OutputFile.SasToken, asset);
 
                     log.LogInformation($"File uploaded successfully");
 
                     // Call the Files method to generate thumbnails in D365 Marketing
-                    DynamicsClient.UpdateFileEntity(client, response2.OutputFile.FileId);
+                    DynamicsClient.UpdateFileEntity(client, response.OutputFile.FileId);
 
                     log.LogInformation($"File entity updated successfully");
                 }

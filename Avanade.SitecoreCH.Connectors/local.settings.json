@@ -2,14 +2,10 @@
     "IsEncrypted": false,
   "Values": {
     "AzureWebJobsStorage": "",
-    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
-    //"FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated"
-    "SitecoreCHServiceBusConnectionString": "Endpoint=sb://sb-sitecorech.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=ppGqT90cK26VuKaKDI5lS93jLmOOtrLWIuZay8OW2Vg="
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet"
   },
   "ConnectionStrings": {
-    "SitecoreCHServiceBusConnectionString": "Endpoint=sb://sb-sitecorech.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=ppGqT90cK26VuKaKDI5lS93jLmOOtrLWIuZay8OW2Vg=",
-    //"Connect": "Url=https://orge51a26de.crm4.dynamics.com;Username=erik@terbeeke.onmicrosoft.com;Password=AY3sSAJ?JG3xSyRN;",
-    //"Connect": "Url=https://orgd5c8cd76.crm4.dynamics.com;Username=erik@terbeeke.onmicrosoft.com;Password=AY3sSAJ?JG3xSyRN;"
+    "SitecoreCHServiceBusConnectionString": "Endpoint=sb://sb-sitecorech-connectors.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=ppGqT90cK26VuKaKDI5lS93jLmOOtrLWIuZay8OW2Vg=",
     "Connect": "Url=https://orgd5c8cd76.crm4.dynamics.com;Username=apiuser@terbeeke.onmicrosoft.com;Password=ContentH4b!;"
   }
 }
